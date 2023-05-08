@@ -36,11 +36,16 @@ class MsgRecv (BehaviorModelExecutor):
 
     def ext_trans(self,port, msg):
         if port == "recv":
-            print("start")
-            myfunction()
-            print("done")
-            self._cur_state = "Wait"
+            # SysMessage의 구성
+            # Source : 메시지를 보낸 모델
+            # DST : 메시지를 보낸 출력 포트
+            print(msg)
+            if msg.get_dst() == "process" :
+                print("start")
+                print("done")
+                self._cur_state = "Wait"
 
+        
     def output(self):
         return None
         
@@ -48,12 +53,6 @@ class MsgRecv (BehaviorModelExecutor):
         if self._cur_state == "Wait":
             self._cur_state = "Wait"
 
-def myfunction() :
-    i = 0
-    while (i == 10000000) :
-        i += 1
-    return
-# commit
 # System Simulator Initialization
 ss = SystemSimulator()
 ss.register_engine("first", "REAL_TIME", 1)
